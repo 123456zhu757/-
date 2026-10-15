@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowRight, X } from 'lucide-react'
 import './styles.css'
-import './locker-reference.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
@@ -27,9 +26,10 @@ function App() {
       <section className="locker-scene">
         <div className="scene-title"><span>WELCOME TO</span><h1>OUR <i>LOCKER</i></h1><p>六个人，把第一次共同完成的项目<br/>收进同一排校园储物柜。</p></div>
         <div className={'locker-bank ' + (open ? 'is-open' : '')}>
-          <LockerDoor number="01" className="locker-one reference-left" stickers={['TEAM 06', '✿', 'FIRST DAY']} />
-          <button className="locker openable reference-middle" onClick={() => setOpen(!open)} aria-label="打开团队身份柜"><div className="door-face"><Vent/><span className="locker-number">02</span><span className="door-label">TEAM<br/>IDENTITY</span><div className="sticker-group"><b>★</b><i>OUR<br/>CREW</i><em>♥</em></div><Handle/><div className="door-id-rack">{teamMembers.map((member, index) => <button key={member.name} className="hanging-card" style={{ '--card': member.color, '--tilt': `${(index % 3 - 1) * 3}deg` } as React.CSSProperties} onClick={(event) => { event.stopPropagation(); setSelected(index) }}><span className="lanyard"/><span className="clip"/><span className="mini-photo" style={member.photo ? { backgroundImage: `url(${member.photo})` } : {}}>{member.photo ? '' : member.initials}</span><b>{member.name}</b><small>{member.role}</small></button>)}</div></div><div className="locker-inside"><div className="inside-top"><span>TEAM ARCHIVE</span><b>06</b></div><div className="mini-books"><i/><i/><i/><i/><i/></div><div className="archive-sign">FIND A WORD<br/><b>OUR STORY</b></div><div className="mini-case">TRAINING<br/><b>FILES</b></div><div className="folder-box">SELECTED<br/><b>WORK</b></div><p>打开门内的身份牌 →</p></div></button>
-          <LockerDoor number="03" className="locker-three reference-right" stickers={['SNAP', 'MEMORIES', '★']} />
+          <LockerDoor number="01" className="locker-one" stickers={['✦', 'BEST DAY', '☺']} />
+          <button className="locker openable" onClick={() => setOpen(!open)} aria-label="打开团队身份柜"><div className="door-face"><Vent/><span className="locker-number">02</span><span className="door-label">TEAM<br/>IDENTITY</span><div className="sticker-group"><b>★</b><i>OUR<br/>CREW</i><em>♥</em></div><Handle/></div><div className="locker-inside"><div className="inside-top"><span>MEMBER IDS</span><b>TEAM 06</b></div><div className="card-rack">{teamMembers.map((member, index) => <button key={member.name} className="hanging-card" style={{ '--card': member.color, '--tilt': `${(index % 3 - 1) * 4}deg` } as React.CSSProperties} onClick={(event) => { event.stopPropagation(); setSelected(index) }}><span className="lanyard"/><span className="clip"/><span className="mini-photo" style={member.photo ? { backgroundImage: `url(${member.photo})` } : {}}>{member.photo ? '' : member.initials}</span><b>{member.name}</b><small>{member.role}</small></button>)}</div><p>点击身份牌，认识我们的成员 →</p></div></button>
+          <LockerDoor number="03" className="locker-three" stickers={['TRAINING', '✿', 'GOOD LUCK']} />
+          <LockerDoor number="04" className="locker-four" stickers={['☆', 'MEMORIES', 'SMILE']} />
         </div>
         <button className="open-tip" onClick={() => setOpen(!open)}>{open ? '合上身份柜' : '打开第二扇柜门'} <ArrowRight size={15}/></button>
       </section><footer>TRAINING ENDS, OUR STORY STARTS</footer>
