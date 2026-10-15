@@ -1,0 +1,2 @@
+.hanging-card b{white-space:nowrap;word-break:keep-all;overflow:visible;letter-spacing:-.14em;font-size:10px}
+@media(max-width:760px){.hanging-card b{font-size:8px;letter-spacing:-.18em}}

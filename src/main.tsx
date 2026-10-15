@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowRight, X } from 'lucide-react'
 import './styles.css'
+import './card-names.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
