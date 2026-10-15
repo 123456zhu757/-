@@ -46,8 +46,8 @@ jobs:
               throw error;
             }
             const pending = new Set(['deployment_in_progress', 'queued', 'cancel_pending']);
-            if (!pending.has(response.data.status)) {
-              core.info('Old deployment is terminal: ' + response.data.status);
+            if (response.data.status === 'succeed' || response.data.status === 'cancelled') {
+              core.info('Old deployment is complete: ' + response.data.status);
               return;
             }
             if (response.data.status !== 'cancel_pending') {
