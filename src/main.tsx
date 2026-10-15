@@ -25,7 +25,7 @@ function App() {
     {!entered ? <Welcome progress={progress} /> : <>
       <header className="site-header"><span>新人培训项目汇报</span><b>TEAM 03</b><span>2026 / FIRST PROJECT</span></header>
       <section className="locker-scene">
-        <div className="scene-title"><span>WELCOME TO</span><h1>OUR <i>LOCKER</i></h1><p>六个人，把第一次共同完成的项目<br/>收进同一排校园储物柜。</p></div>
+        <div className="scene-title"><span>WELCOME TO</span><h1>OUR <i>LOCKER</i></h1><p>六个人，把第一次共同完成的项目<br/>收进同一排储物柜。</p></div>
         <div className={'locker-bank ' + (open ? 'is-open' : '')}>
           <LockerDoor number="01" className="locker-one" stickers={['✦', 'BEST DAY', '☺']} />
           <button className="locker openable" onClick={() => setOpen(!open)} aria-label="打开第三组身份柜"><div className="door-face"><Vent/><span className="locker-number">02</span><span className="door-label">TEAM<br/>IDENTITY</span><div className="sticker-group"><b>★</b><i>OUR<br/>CREW</i><em>♥</em></div><Handle/></div><div className="locker-inside"><div className="inside-top"><span>MEMBER IDS</span><b>TEAM 03</b></div><div className="card-rack">{teamMembers.map((member, index) => <button key={member.name} className="hanging-card" style={{ '--card': member.color, '--tilt': `${(index % 3 - 1) * 4}deg` } as React.CSSProperties} onClick={(event) => { event.stopPropagation(); setSelected(index) }}><span className="lanyard"/><span className="clip"/><span className="mini-photo" style={member.photo ? { backgroundImage: `url(${member.photo})` } : {}}>{member.photo ? '' : member.initials}</span><b>{member.name}</b><small>{member.role}</small></button>)}</div><p>点击身份牌，认识我们的成员 →</p></div></button>
