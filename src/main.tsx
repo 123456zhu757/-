@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
+import { createPortal } from 'react-dom'
 import { ArrowRight, X } from 'lucide-react'
 import './styles.css'
 import './card-names.css'
@@ -60,18 +61,18 @@ function MapLocker() {
   }, [mapVisible, active])
   return <>
     <div className={'locker map-locker ' + (opened ? 'map-door-open' : '')}>
-      <div className="map-cabinet-interior"><small>TEAM 03 / JOURNEY</small><button className="folded-map" onClick={() => setMapVisible(true)} aria-label="展开培训地图"><span>⌁</span><span>✧</span><span>♧</span><span>↗</span><b>OUR JOURNEY<br/>点击展开地图</b></button><p>一张地图，四段足迹</p></div>
+      <div className="map-cabinet-interior"><small>TEAM 03 / JOURNEY</small><button className="folded-map" onClick={() => { setActive(null); setMapVisible(true) }} disabled={!opened} aria-label="展开培训地图"><span>⌁</span><span>✧</span><span>♧</span><span>↗</span><b>OUR JOURNEY<br/>点击展开地图</b></button><p>一张地图，四段足迹</p></div>
       <button className="map-cabinet-door" onClick={() => setOpened(!opened)} aria-label={opened ? '合上第三扇柜门' : '打开第三扇柜门'} aria-expanded={opened}><Vent/><span className="locker-number">03</span><span className="door-label">OUR<br/>JOURNEY</span><div className="stickers"><b className="sticker s0">TRAINING</b><b className="sticker s1">✿</b><b className="sticker s2">OUR MAP</b></div><Handle/><span className="bottom-vent"><i/><i/><i/></span></button>
       {opened && <button className="map-close-cabinet" onClick={() => setOpened(false)}>合上柜门</button>}
     </div>
-    {mapVisible && <div className="journey-overlay" role="dialog" aria-modal="true" aria-label="第三组培训地图"><button className="map-dismiss" aria-label="关闭地图" onClick={() => setMapVisible(false)}><X/></button><div className="map-heading"><small>TEAM 03 · TRAINING JOURNEY</small><h2>展开我们的足迹</h2><p>点击四个点位探索 · 地图内容待替换</p></div><div className={'paper-map ' + (active !== null ? 'point-selected' : '')}>
+    {mapVisible && createPortal(<div className="journey-overlay" role="dialog" aria-modal="true" aria-label="第三组培训地图"><button className="map-dismiss" aria-label="关闭地图" onClick={() => setMapVisible(false)}><X/></button><div className="map-heading"><small>TEAM 03 · TRAINING JOURNEY</small><h2>展开我们的足迹</h2><p>点击四个点位探索 · 地图内容待替换</p></div><div className={'paper-map ' + (active !== null ? 'point-selected' : '')}>
       <div className="map-art" style={{ transformOrigin: active !== null ? mapStops[active].x + '% ' + mapStops[active].y + '%' : '50% 50%' }}>
         <svg className="map-topography" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150 Q150 350 320 210 T650 160 T1000 320 M0 430 Q300 240 480 390 T1000 420 M100 0 L260 650 M540 0 L480 650 M850 0 L700 650"/><path d="M30 70 L950 580 M0 580 Q450 320 1000 80 M150 0 Q420 320 950 650"/></svg>
         <svg className="map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path className="route-halo" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/><path className="route-line" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/></svg>
         <div className="map-center-title">OUR<br/><i>JOURNEY</i><small>第三组 · 培训足迹</small></div>
         {mapStops.map((stop, index) => <button key={stop.title} className={'map-pin ' + (active === index ? 'active' : '')} style={{ left: stop.x + '%', top: stop.y + '%' }} onClick={() => setActive(index)} aria-label={'放大' + stop.title}><b>{String(index + 1).padStart(2, '0')}</b><span>{stop.title}</span></button>)}
       </div><div className="paper-creases" aria-hidden="true"/><div className="unfold-flap flap-left"/><div className="unfold-flap flap-right"/>
-    </div>{active !== null && <div className="point-caption"><b>{mapStops[active].title}</b><span>点位内容待补充</span><button onClick={() => setActive(null)}>返回完整地图 ↗</button></div>}</div>}
+    </div>{active !== null && <div className="point-caption"><b>{mapStops[active].title}</b><span>点位内容待补充</span><button onClick={() => setActive(null)}>返回完整地图 ↗</button></div>}</div>, document.body)}
   </>
 }
 function Handle() { return <span className="handle"><i/></span> }
