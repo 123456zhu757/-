@@ -5,12 +5,12 @@ import './styles.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
-  { name: '成员 01', role: '项目统筹', initials: '01', color: '#f8bf42', photo: '', note: '负责推进项目节奏与团队协作。' },
-  { name: '成员 02', role: '用户研究', initials: '02', color: '#f27d75', photo: '', note: '负责整理调研信息与用户洞察。' },
-  { name: '成员 03', role: '视觉表达', initials: '03', color: '#45b9d7', photo: '', note: '负责项目视觉与内容表达。' },
-  { name: '成员 04', role: '方案策划', initials: '04', color: '#b6d84a', photo: '', note: '负责策略框架与落地方案。' },
-  { name: '成员 05', role: '内容记录', initials: '05', color: '#c896e4', photo: '', note: '负责培训记录与故事梳理。' },
-  { name: '成员 06', role: '成果展示', initials: '06', color: '#f39a4b', photo: '', note: '负责汇报呈现与成果沉淀。' },
+  { name: '孙刘轶', role: '懂事长', initials: '孙', color: '#f8bf42', photo: '', note: '团队身份牌 01。' },
+  { name: '朱天怡', role: '金嗓子', initials: '朱', color: '#f27d75', photo: '', note: '团队身份牌 02。' },
+  { name: '朱弋洁', role: '金点子', initials: '朱', color: '#45b9d7', photo: '', note: '团队身份牌 03。' },
+  { name: '钱蕴程', role: '笔杆子', initials: '钱', color: '#b6d84a', photo: '', note: '团队身份牌 04。' },
+  { name: '王玮琦', role: '金点子', initials: '王', color: '#c896e4', photo: '', note: '团队身份牌 05。' },
+  { name: '倪晨安', role: '笔杆子', initials: '倪', color: '#f39a4b', photo: '', note: '团队身份牌 06。' },
 ]
 
 function App() {
