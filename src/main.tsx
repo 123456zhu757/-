@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
 import { ArrowLeft, ArrowRight, BookOpen, ChevronRight, Headphones, Music2, Pause, Play, RotateCcw, Volume2, VolumeX, X } from 'lucide-react'
 import './styles.css'
 
@@ -55,3 +56,5 @@ function LockerModal({member,index,back,setBack,close}:{member:Member;index:numb
 function FolderModal({folder,close}:{folder:typeof folders[number];close:()=>void}) { return <div className="modal"><button className="close" onClick={close}><X/></button><article className="detail-paper"><small>{folder.code}</small><h2>{folder.title}</h2><p>{folder.body}</p><div>{folder.tags.map(t=><span key={t}>{t}</span>)}</div><hr/><b>在这里替换为你们的项目背景、过程、成果数据和复盘内容。</b></article></div> }
 function GalleryModal({photo,setPhoto,close}:{photo:number;setPhoto:(n:number)=>void;close:()=>void}) { return <div className="modal"><button className="close" onClick={close}><X/></button><section className="album"><small>TRAINING PHOTO ALBUM · {String(photo+1).padStart(2,'0')} / 06</small><div className="album-photo"><span>在这里放入<br/>培训照片</span></div><h2>{photos[photo]}</h2><p>把真实照片放入 <code>public/assets/gallery</code> 后，在代码中替换此占位区域。</p><div className="album-controls"><button onClick={()=>setPhoto((photo+5)%6)}><ArrowLeft/></button><button onClick={()=>setPhoto((photo+1)%6)}><ArrowRight/></button></div></section></div> }
 export default App
+
+createRoot(document.getElementById('root')!).render(<App />)
