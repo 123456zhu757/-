@@ -5,6 +5,7 @@ import { ArrowRight, X } from 'lucide-react'
 import './styles.css'
 import './card-names.css'
 import './map.css'
+import './supplied-map.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
@@ -42,10 +43,10 @@ function App() {
 function Welcome({ progress }: { progress: number }) { return <section className="welcome"><div className="welcome-word" style={{ '--fill': `${progress}%` } as React.CSSProperties}>WELCOME</div><div className="welcome-meta">· TEAM 03 — TRAINING ARCHIVE</div><div className="loading"><b>{String(progress).padStart(2, '0')}<small>%</small></b><span><i style={{ width: `${progress}%` }}/></span><em>LOADING OUR FIRST STORY</em></div></section> }
 function Vent() { return <span className="vent"><i/><i/><i/><i/></span> }
 const mapStops = [
-  { title: '点位 01', x: 24, y: 29 },
-  { title: '点位 02', x: 70, y: 24 },
-  { title: '点位 03', x: 77, y: 70 },
-  { title: '点位 04', x: 30, y: 76 },
+  { title: '点位 01', x: 28, y: 21 },
+  { title: '点位 02', x: 63, y: 41 },
+  { title: '点位 03', x: 70, y: 68 },
+  { title: '点位 04', x: 47, y: 51 },
 ]
 function MapLocker() {
   const [opened, setOpened] = useState(false)
@@ -65,14 +66,13 @@ function MapLocker() {
       <button className="map-cabinet-door" onClick={() => setOpened(!opened)} aria-label={opened ? '合上第三扇柜门' : '打开第三扇柜门'} aria-expanded={opened}><Vent/><span className="locker-number">03</span><span className="door-label">OUR<br/>JOURNEY</span><div className="stickers"><b className="sticker s0">TRAINING</b><b className="sticker s1">✿</b><b className="sticker s2">OUR MAP</b></div><Handle/><span className="bottom-vent"><i/><i/><i/></span></button>
       {opened && <button className="map-close-cabinet" onClick={() => setOpened(false)}>合上柜门</button>}
     </div>
-    {mapVisible && createPortal(<div className="journey-overlay" role="dialog" aria-modal="true" aria-label="第三组培训地图"><button className="map-dismiss" aria-label="关闭地图" onClick={() => setMapVisible(false)}><X/></button><div className="map-heading"><small>TEAM 03 · TRAINING JOURNEY</small><h2>展开我们的足迹</h2><p>点击四个点位探索 · 地图内容待替换</p></div><div className={'paper-map ' + (active !== null ? 'point-selected' : '')}>
+    {mapVisible && createPortal(<div className="journey-overlay supplied-map-overlay" role="dialog" aria-modal="true" aria-label="第三组培训地图"><button className="map-dismiss" aria-label="关闭地图" onClick={() => setMapVisible(false)}><X/></button><div className="map-heading"><small>TEAM 03 · TRAINING JOURNEY</small><h2>展开我们的足迹</h2><p>点击地图中的四个点位放大查看</p></div><div className={'paper-map supplied-map ' + (active !== null ? 'point-selected' : '')}>
       <div className="map-art" style={{ transformOrigin: active !== null ? mapStops[active].x + '% ' + mapStops[active].y + '%' : '50% 50%' }}>
-        <svg className="map-topography" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150 Q150 350 320 210 T650 160 T1000 320 M0 430 Q300 240 480 390 T1000 420 M100 0 L260 650 M540 0 L480 650 M850 0 L700 650"/><path d="M30 70 L950 580 M0 580 Q450 320 1000 80 M150 0 Q420 320 950 650"/></svg>
-        <svg className="map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path className="route-halo" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/><path className="route-line" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/></svg>
-        <div className="map-center-title">OUR<br/><i>JOURNEY</i><small>第三组 · 培训足迹</small></div>
-        {mapStops.map((stop, index) => <button key={stop.title} className={'map-pin ' + (active === index ? 'active' : '')} style={{ left: stop.x + '%', top: stop.y + '%' }} onClick={() => setActive(index)} aria-label={'放大' + stop.title}><b>{String(index + 1).padStart(2, '0')}</b><span>{stop.title}</span></button>)}
+        <img className="supplied-map-image" src="./assets/map/展开的地图.png" alt="浦发集团四个点位路线地图" draggable={false}/>
+        <svg className="map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path className="route-halo" d="M35.5 22.2 Q51.5 22.8 60 34.5 M67.2 47 Q71 54.5 70.3 60.4 M64 65 Q54 62.3 51.8 57 M44.5 46 Q28 38 29.2 27.5"/><path className="route-line" d="M35.5 22.2 Q51.5 22.8 60 34.5 M67.2 47 Q71 54.5 70.3 60.4 M64 65 Q54 62.3 51.8 57 M44.5 46 Q28 38 29.2 27.5"/></svg>
+        {mapStops.map((stop, index) => <button key={stop.title} className={'map-pin image-hotspot ' + (active === index ? 'active' : '')} style={{ left: stop.x + '%', top: stop.y + '%' }} onClick={() => setActive(index)} aria-label={'放大' + stop.title}/>)}
       </div><div className="paper-creases" aria-hidden="true"/><div className="unfold-flap flap-left"/><div className="unfold-flap flap-right"/>
-    </div>{active !== null && <div className="point-caption"><b>{mapStops[active].title}</b><span>点位内容待补充</span><button onClick={() => setActive(null)}>返回完整地图 ↗</button></div>}</div>, document.body)}
+    </div>{active !== null && <div className="point-caption"><b>{mapStops[active].title}</b><button onClick={() => setActive(null)}>返回完整地图 ↗</button></div>}</div>, document.body)}
   </>
 }
 function Handle() { return <span className="handle"><i/></span> }
