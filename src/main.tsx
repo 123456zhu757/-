@@ -5,12 +5,12 @@ import './styles.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
-  { name: '孙刘轶', role: '懂事长', initials: '孙', color: '#f8bf42', photo: '', note: '团队身份牌 01。' },
-  { name: '朱天怡', role: '金嗓子', initials: '朱', color: '#f27d75', photo: '', note: '团队身份牌 02。' },
-  { name: '朱弋洁', role: '金点子', initials: '朱', color: '#45b9d7', photo: '', note: '团队身份牌 03。' },
-  { name: '钱蕴程', role: '笔杆子', initials: '钱', color: '#b6d84a', photo: '', note: '团队身份牌 04。' },
-  { name: '王玮琦', role: '金点子', initials: '王', color: '#c896e4', photo: '', note: '团队身份牌 05。' },
-  { name: '倪晨安', role: '笔杆子', initials: '倪', color: '#f39a4b', photo: '', note: '团队身份牌 06。' },
+  { name: '孙刘轶', role: '懂事长', initials: '孙', color: '#f8bf42', photo: './assets/members/孙刘轶.jpg', note: '团队身份牌 01。' },
+  { name: '朱天怡', role: '金嗓子', initials: '朱', color: '#f27d75', photo: './assets/members/朱天怡.jpg', note: '团队身份牌 02。' },
+  { name: '朱弋洁', role: '金点子', initials: '朱', color: '#45b9d7', photo: './assets/members/朱弋洁.jpg', note: '团队身份牌 03。' },
+  { name: '钱蕴程', role: '笔杆子', initials: '钱', color: '#b6d84a', photo: './assets/members/钱蕴程.jpg', note: '团队身份牌 04。' },
+  { name: '王玮琦', role: '金点子', initials: '王', color: '#c896e4', photo: './assets/members/王玮琦.jpg', note: '团队身份牌 05。' },
+  { name: '倪晨安', role: '笔杆子', initials: '倪', color: '#f39a4b', photo: './assets/members/倪晨安.jpg', note: '团队身份牌 06。' },
 ]
 
 function App() {
