@@ -6,6 +6,7 @@ import './styles.css'
 import './card-names.css'
 import './map.css'
 import './supplied-map.css'
+import './report.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
@@ -36,7 +37,12 @@ function App() {
           <LockerDoor number="04" className="locker-four" stickers={['☆', 'MEMORIES', 'SMILE']} />
         </div>
         <button className="open-tip" onClick={() => setOpen(!open)}>{open ? '合上身份柜' : '打开第二扇柜门'} <ArrowRight size={15}/></button>
-      </section><footer>TRAINING ENDS, OUR STORY STARTS</footer>
+      </section>
+      <a className="report-scroll-link" href="#training-report">向下探索我们的培训故事 ↓</a>
+      <section id="training-report" className="training-report" aria-label="第三组数字学习地图">
+        <iframe title="全员PDG合伙人｜第三组数字学习地图" src="./report/pdg-2026-team03.html" className="training-report-frame" />
+      </section>
+      <footer>TRAINING ENDS, OUR STORY STARTS</footer>
     </>}{selected !== null && <MemberModal member={teamMembers[selected]} close={() => setSelected(null)} />}
   </main>
 }
