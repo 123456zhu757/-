@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { ArrowRight, X } from 'lucide-react'
 import './styles.css'
 import './card-names.css'
+import './map.css'
 
 /** 在这里替换姓名、岗位、照片与介绍。photo 留空时会显示姓名缩写。 */
 const teamMembers = [
@@ -29,7 +30,7 @@ function App() {
         <div className={'locker-bank ' + (open ? 'is-open' : '')}>
           <LockerDoor number="01" className="locker-one" stickers={['✦', 'BEST DAY', '☺']} />
           <button className="locker openable" onClick={() => setOpen(!open)} aria-label="打开第三组身份柜"><div className="door-face"><Vent/><span className="locker-number">02</span><span className="door-label">TEAM<br/>IDENTITY</span><div className="sticker-group"><b>★</b><i>OUR<br/>CREW</i><em>♥</em></div><Handle/></div><div className="locker-inside"><div className="inside-top"><span>MEMBER IDS</span><b>TEAM 03</b></div><div className="card-rack">{teamMembers.map((member, index) => <button key={member.name} className="hanging-card" style={{ '--card': member.color, '--tilt': `${(index % 3 - 1) * 4}deg` } as React.CSSProperties} onClick={(event) => { event.stopPropagation(); setSelected(index) }}><span className="lanyard"/><span className="clip"/><span className="mini-photo" style={member.photo ? { backgroundImage: `url(${member.photo})` } : {}}>{member.photo ? '' : member.initials}</span><b>{member.name}</b><small>{member.role}</small></button>)}</div><p>点击身份牌，认识我们的成员 →</p></div></button>
-          <LockerDoor number="03" className="locker-three" stickers={['TRAINING', '✿', 'GOOD LUCK']} />
+          <MapLocker />
           <LockerDoor number="04" className="locker-four" stickers={['☆', 'MEMORIES', 'SMILE']} />
         </div>
         <button className="open-tip" onClick={() => setOpen(!open)}>{open ? '合上身份柜' : '打开第二扇柜门'} <ArrowRight size={15}/></button>
@@ -39,6 +40,40 @@ function App() {
 }
 function Welcome({ progress }: { progress: number }) { return <section className="welcome"><div className="welcome-word" style={{ '--fill': `${progress}%` } as React.CSSProperties}>WELCOME</div><div className="welcome-meta">· TEAM 03 — TRAINING ARCHIVE</div><div className="loading"><b>{String(progress).padStart(2, '0')}<small>%</small></b><span><i style={{ width: `${progress}%` }}/></span><em>LOADING OUR FIRST STORY</em></div></section> }
 function Vent() { return <span className="vent"><i/><i/><i/><i/></span> }
+const mapStops = [
+  { title: '点位 01', x: 24, y: 29 },
+  { title: '点位 02', x: 70, y: 24 },
+  { title: '点位 03', x: 77, y: 70 },
+  { title: '点位 04', x: 30, y: 76 },
+]
+function MapLocker() {
+  const [opened, setOpened] = useState(false)
+  const [mapVisible, setMapVisible] = useState(false)
+  const [active, setActive] = useState<number | null>(null)
+  useEffect(() => {
+    if (!mapVisible) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { if (active !== null) setActive(null); else setMapVisible(false) } }
+    window.addEventListener('keydown', escape)
+    return () => { document.body.style.overflow = previous; window.removeEventListener('keydown', escape) }
+  }, [mapVisible, active])
+  return <>
+    <div className={'locker map-locker ' + (opened ? 'map-door-open' : '')}>
+      <div className="map-cabinet-interior"><small>TEAM 03 / JOURNEY</small><button className="folded-map" onClick={() => setMapVisible(true)} aria-label="展开培训地图"><span>⌁</span><span>✧</span><span>♧</span><span>↗</span><b>OUR JOURNEY<br/>点击展开地图</b></button><p>一张地图，四段足迹</p></div>
+      <button className="map-cabinet-door" onClick={() => setOpened(!opened)} aria-label={opened ? '合上第三扇柜门' : '打开第三扇柜门'} aria-expanded={opened}><Vent/><span className="locker-number">03</span><span className="door-label">OUR<br/>JOURNEY</span><div className="stickers"><b className="sticker s0">TRAINING</b><b className="sticker s1">✿</b><b className="sticker s2">OUR MAP</b></div><Handle/><span className="bottom-vent"><i/><i/><i/></span></button>
+      {opened && <button className="map-close-cabinet" onClick={() => setOpened(false)}>合上柜门</button>}
+    </div>
+    {mapVisible && <div className="journey-overlay" role="dialog" aria-modal="true" aria-label="第三组培训地图"><button className="map-dismiss" aria-label="关闭地图" onClick={() => setMapVisible(false)}><X/></button><div className="map-heading"><small>TEAM 03 · TRAINING JOURNEY</small><h2>展开我们的足迹</h2><p>点击四个点位探索 · 地图内容待替换</p></div><div className={'paper-map ' + (active !== null ? 'point-selected' : '')}>
+      <div className="map-art" style={{ transformOrigin: active !== null ? mapStops[active].x + '% ' + mapStops[active].y + '%' : '50% 50%' }}>
+        <svg className="map-topography" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150 Q150 350 320 210 T650 160 T1000 320 M0 430 Q300 240 480 390 T1000 420 M100 0 L260 650 M540 0 L480 650 M850 0 L700 650"/><path d="M30 70 L950 580 M0 580 Q450 320 1000 80 M150 0 Q420 320 950 650"/></svg>
+        <svg className="map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path className="route-halo" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/><path className="route-line" d="M24 29 Q45 6 70 24 Q95 45 77 70 Q55 96 30 76 Q5 50 24 29"/></svg>
+        <div className="map-center-title">OUR<br/><i>JOURNEY</i><small>第三组 · 培训足迹</small></div>
+        {mapStops.map((stop, index) => <button key={stop.title} className={'map-pin ' + (active === index ? 'active' : '')} style={{ left: stop.x + '%', top: stop.y + '%' }} onClick={() => setActive(index)} aria-label={'放大' + stop.title}><b>{String(index + 1).padStart(2, '0')}</b><span>{stop.title}</span></button>)}
+      </div><div className="paper-creases" aria-hidden="true"/><div className="unfold-flap flap-left"/><div className="unfold-flap flap-right"/>
+    </div>{active !== null && <div className="point-caption"><b>{mapStops[active].title}</b><span>点位内容待补充</span><button onClick={() => setActive(null)}>返回完整地图 ↗</button></div>}</div>}
+  </>
+}
 function Handle() { return <span className="handle"><i/></span> }
 function LockerDoor({ number, stickers, className }: { number: string; stickers: string[]; className: string }) { return <div className={'locker '+className}><Vent/><span className="locker-number">{number}</span><span className="door-label">STUDENT<br/>LOCKER</span><div className="stickers">{stickers.map((sticker, index) => <b key={sticker} className={'sticker s'+index}>{sticker}</b>)}</div><Handle/><span className="bottom-vent"><i/><i/><i/></span></div> }
 function MemberModal({ member, close }: { member: typeof teamMembers[number]; close: () => void }) { return <div className="member-modal" onClick={close}><article onClick={event => event.stopPropagation()}><button aria-label="关闭" onClick={close}><X/></button><span className="big-lanyard"/><div className="id-photo" style={member.photo ? { backgroundImage: `url(${member.photo})` } : { backgroundColor: member.color }}>{member.photo ? '' : member.initials}</div><div><small>TEAM 03 / IDENTITY CARD</small><h2>{member.name}</h2><b>{member.role}</b><p>{member.note}</p></div></article></div> }
